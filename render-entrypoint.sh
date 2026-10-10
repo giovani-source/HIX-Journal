@@ -45,6 +45,11 @@ chmod -R 777 /var/www/files/public
 if [ -f "/var/www/html/config.TEMPLATE.inc.php" ]; then
     sed -i "s/force_ssl = Off/force_ssl = On/g" /var/www/html/config.TEMPLATE.inc.php
     sed -i "s/trust_x_forwarded_for = Off/trust_x_forwarded_for = On/g" /var/www/html/config.TEMPLATE.inc.php
+    sed -i "s/session_check_ip = On/session_check_ip = Off/g" /var/www/html/config.TEMPLATE.inc.php
+fi
+
+if [ -f "/var/www/html/config.inc.php" ]; then
+    sed -i "s/session_check_ip = On/session_check_ip = Off/g" /var/www/html/config.inc.php
 fi
 
 # Nuke-proof HTTPS fix: Force PHP to see HTTPS directly
