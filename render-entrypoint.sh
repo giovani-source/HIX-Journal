@@ -15,6 +15,13 @@ if [ -f "/var/www/html/wipe.php" ]; then
     rm /var/www/html/wipe.php
 fi
 
+# Run force reset script if it exists
+if [ -f "/var/www/html/force_reset.php" ]; then
+    echo "Running force reset script..."
+    php /var/www/html/force_reset.php || true
+    rm /var/www/html/force_reset.php
+fi
+
 # Give full read/write to the directory regardless of the web server user
 chmod -R 777 /var/www/files/ojsdata
 chmod -R 777 /var/www/files/public
