@@ -3,9 +3,8 @@ FROM pkpofficial/ojs:stable-3_4_0
 USER root
 
 # Install PostgreSQL extensions so OJS can talk to Render's database
-# OJS 3.4 image uses PHP 8.1 on Alpine. We need to install the extensions.
-RUN apk update && apk add --no-cache postgresql-dev php81-pdo_pgsql php81-pgsql || true
-RUN docker-php-ext-install pdo pdo_pgsql pgsql || true
+# The official OJS 3.4.0-11 Alpine image uses PHP 8.3
+RUN apk update && apk add --no-cache postgresql-dev php83-pdo_pgsql php83-pgsql
 
 # Copy our custom entrypoint script
 COPY render-entrypoint.sh /usr/local/bin/render-entrypoint.sh
