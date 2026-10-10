@@ -17,8 +17,6 @@ services:
       mountPath: /var/www/files
       sizeGB: 10
     envVars:
-      - key: HTTPS
-        value: "on"
       - key: SERVERNAME
         value: hix-journal.onrender.com
       - key: DATABASE_DRIVER

@@ -25,12 +25,13 @@ ln -sf /var/www/files/public/site /var/www/html/public/site
 ln -sf /var/www/files/public/journals /var/www/html/public/journals
 chmod -R 777 /var/www/files/public
 
-# Background task to aggressively force SSL in config.inc.php as soon as it is generated
+# Background task to safely force HTTPS base_url in config.inc.php as soon as it is generated
 sh -c '
     while true; do
-        if [ -f "/var/www/html/config.inc.php" ]; then
-            sed -i "s/force_ssl = Off/force_ssl = On/g" /var/www/html/config.inc.php
-            sed -i "s/trust_x_forwarded_for = Off/trust_x_forwarded_for = On/g" /var/www/html/config.inc.php
+        if [ -f "/var/www/html/config.inc.php" ] && grep -q "base_url = \"http://hix-journal.onrender.com\"" "/var/www/html/config.inc.php"; then
+            # Replace http with https in base_url to fix CSS without causing redirect loops
+            sed -i "s|base_url = \"http://hix-journal.onrender.com\"|base_url = \"https://hix-journal.onrender.com\"|g" /var/www/html/config.inc.php
+            # Do not use force_ssl as it can cause ERR_TOO_MANY_REDIRECTS behind some proxies
         fi
         sleep 2
     done
