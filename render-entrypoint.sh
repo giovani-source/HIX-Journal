@@ -4,11 +4,13 @@ set -e
 echo "Starting OJS Initialization..."
 
 # Create necessary directories on the persistent disk
+# We use a subfolder inside the mount point because mount roots often resist chown/chmod
+mkdir -p /var/www/files/ojsdata
 mkdir -p /var/www/files/public
-mkdir -p /var/www/files/submissions
 
 # Give full read/write to the directory regardless of the web server user
-chmod -R 777 /var/www/files
+chmod -R 777 /var/www/files/ojsdata
+chmod -R 777 /var/www/files/public
 
 # Handle public directory (used for logos, custom CSS, etc)
 echo "First time setup: Linking public directory contents to persistent disk..."
