@@ -1,4 +1,4 @@
-FROM pkpofficial/ojs:3.4.0-5
+FROM pkpofficial/ojs:stable-3_4_0
 
 # Copy our custom entrypoint script
 COPY render-entrypoint.sh /usr/local/bin/render-entrypoint.sh
