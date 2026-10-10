@@ -1,0 +1,39 @@
+databases:
+  - name: hix-db
+    databaseName: ojs
+    user: ojsuser
+    plan: starter
+    postgresMajorVersion: 15
+
+services:
+  - type: web
+    name: hix-journal
+    env: docker
+    plan: starter
+    healthCheckPath: /
+    dockerCommand: "/usr/local/bin/render-entrypoint.sh"
+    disk:
+      name: ojs-data
+      mountPath: /var/www/files
+      sizeGB: 10
+    envVars:
+      - key: SERVERNAME
+        value: hixjournal.com.br
+      - key: DATABASE_DRIVER
+        value: postgres
+      - key: OJS_DB_HOST
+        fromDatabase:
+          name: hix-db
+          property: host
+      - key: OJS_DB_USER
+        fromDatabase:
+          name: hix-db
+          property: user
+      - key: OJS_DB_PASSWORD
+        fromDatabase:
+          name: hix-db
+          property: password
+      - key: OJS_DB_NAME
+        fromDatabase:
+          name: hix-db
+          property: database
