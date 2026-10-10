@@ -18,7 +18,7 @@ services:
       sizeGB: 10
     envVars:
       - key: SERVERNAME
-        value: hixjournal.com.br
+        value: hix-journal.onrender.com
       - key: DATABASE_DRIVER
         value: postgres
       - key: OJS_DB_HOST
