@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
 echo "Starting OJS Initialization..."
@@ -33,7 +33,7 @@ else
     echo "Starting background task to watch for installation completion..."
     
     # Run in background: wait until OJS writes 'installed = On' to config
-    bash -c '
+    sh -c '
         while true; do
             if [ -f "/var/www/html/config.inc.php" ] && grep -q "^installed = On" "/var/www/html/config.inc.php" 2>/dev/null; then
                 echo "Installation completed! Moving config to persistent disk..."
