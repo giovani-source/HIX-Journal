@@ -7,8 +7,8 @@ echo "Starting OJS Initialization..."
 mkdir -p /var/www/files/public
 mkdir -p /var/www/files/submissions
 
-# Make sure permissions are correct for Apache
-chown -R www-data:www-data /var/www/files
+# Give full read/write to the directory regardless of the web server user
+chmod -R 777 /var/www/files
 
 # Handle public directory (used for logos, custom CSS, etc)
 # If it's not a symlink yet, set it up
@@ -20,7 +20,7 @@ if [ -d "/var/www/html/public" ] && [ ! -L "/var/www/html/public" ]; then
     fi
     rm -rf /var/www/html/public
     ln -s /var/www/files/public /var/www/html/public
-    chown -R www-data:www-data /var/www/files/public
+    chmod -R 777 /var/www/files/public
 fi
 
 # Handle config.inc.php
@@ -40,7 +40,7 @@ else
                 cp /var/www/html/config.inc.php /var/www/files/config.inc.php
                 rm /var/www/html/config.inc.php
                 ln -s /var/www/files/config.inc.php /var/www/html/config.inc.php
-                chown www-data:www-data /var/www/files/config.inc.php
+                chmod 777 /var/www/files/config.inc.php
                 break
             fi
             sleep 5
@@ -50,4 +50,4 @@ fi
 
 echo "Initialization complete. Starting Apache..."
 # Start the standard apache process from the PHP base image
-exec apache2-foreground
+exec ojs-start
