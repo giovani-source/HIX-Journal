@@ -19,6 +19,16 @@ services:
     envVars:
       - key: SERVERNAME
         value: hix-journal.onrender.com
+      - key: OJS_CLI_INSTALL
+        value: "1"
+      - key: OJS_WEB_CONF_BASE_URL
+        value: "https://hix-journal.onrender.com"
+      - key: OJS_ADMIN_USERNAME
+        value: "admin"
+      - key: OJS_ADMIN_PASSWORD
+        value: "HixJournalAdmin123!"
+      - key: OJS_ADMIN_EMAIL
+        value: "admin@hixjournal.com.br"
       - key: DATABASE_DRIVER
         value: postgres
       - key: OJS_DB_HOST
