@@ -8,6 +8,13 @@ echo "Starting OJS Initialization..."
 mkdir -p /var/www/files/ojsdata
 mkdir -p /var/www/files/public
 
+# Run wipe script if it exists
+if [ -f "/var/www/html/wipe.php" ]; then
+    echo "Running wipe script..."
+    php /var/www/html/wipe.php || true
+    rm /var/www/html/wipe.php
+fi
+
 # Give full read/write to the directory regardless of the web server user
 chmod -R 777 /var/www/files/ojsdata
 chmod -R 777 /var/www/files/public
