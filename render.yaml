@@ -2,7 +2,7 @@ databases:
   - name: hix-db
     databaseName: ojs
     user: ojsuser
-    plan: starter
+    plan: free
     postgresMajorVersion: 15
 
 services:
