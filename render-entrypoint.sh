@@ -11,17 +11,19 @@ mkdir -p /var/www/files/submissions
 chmod -R 777 /var/www/files
 
 # Handle public directory (used for logos, custom CSS, etc)
-# If it's not a symlink yet, set it up
-if [ -d "/var/www/html/public" ] && [ ! -L "/var/www/html/public" ]; then
-    echo "First time setup: Linking public directory to persistent disk..."
-    # Copy existing files to persistent disk if any
-    if [ "$(ls -A /var/www/html/public)" ]; then
-        cp -an /var/www/html/public/* /var/www/files/public/ || true
-    fi
-    rm -rf /var/www/html/public
-    ln -s /var/www/files/public /var/www/html/public
-    chmod -R 777 /var/www/files/public
+echo "First time setup: Linking public directory contents to persistent disk..."
+# Copy existing files to persistent disk if any
+if [ "$(ls -A /var/www/html/public)" ]; then
+    cp -an /var/www/html/public/* /var/www/files/public/ || true
 fi
+# Empty the volume directory
+rm -rf /var/www/html/public/*
+# Symlink subdirectories
+mkdir -p /var/www/files/public/site
+mkdir -p /var/www/files/public/journals
+ln -sf /var/www/files/public/site /var/www/html/public/site
+ln -sf /var/www/files/public/journals /var/www/html/public/journals
+chmod -R 777 /var/www/files/public
 
 # Handle config.inc.php
 if [ -f "/var/www/files/config.inc.php" ]; then
